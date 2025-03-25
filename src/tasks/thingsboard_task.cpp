@@ -63,7 +63,7 @@ void thingsboard_task(void * pvParameter){
             const OTA_Update_Callback callback(CURRENT_FIRMWARE_TITLE, CURRENT_FIRMWARE_VERSION, &updater, &finished_callback, &progress_callback, &update_starting_callback, FIRMWARE_FAILURE_RETRIES, FIRMWARE_PACKET_SIZE);
             Serial.println("Firwmare Update Subscription...");
             updateRequestSent = ota.Subscribe_Firmware_Update(callback);
-            if(updateRequestSent) xTaskCreate(checkForUpdate, "CheckUpdate", 2048, NULL, 5, NULL);
+            // if(updateRequestSent) xTaskCreate(checkForUpdate, "CheckUpdate", 2048, NULL, 5, NULL);
           }
         if (!rpc_subscribed){
             Serial.println("Subscribing for RPC...");
@@ -105,6 +105,7 @@ void handleRequest(const JsonVariantConst &data, JsonDocument &response){
     char buffer[jsonSize];
     serializeJson(data, buffer, jsonSize);
     Serial.println(buffer);
+    digitalWrite(48, buffer[0]=='1'? HIGH : LOW);
 }
 void InitWiFi() {
     Serial.println("Connecting to WiFi...");

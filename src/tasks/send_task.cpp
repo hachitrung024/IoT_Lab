@@ -8,8 +8,9 @@ void send_task(void * pvParameter){
         while(!tb->connected()){
             delay(1000);
         }
-        telemetryJson["temp"] = telemetry.temperature;
-        telemetryJson["humi"] = telemetry.humidity;
+        telemetryJson.clear();
+        telemetryJson["temperature"] = String(telemetry.temperature, 1);
+        telemetryJson["humidity"] = String(telemetry.humidity, 1);
         tb->sendTelemetryJson(telemetryJson, Helper::Measure_Json(telemetryJson));
         // tb->Send_Json("v1/devices/me/telemetry",telemetryJson, Helper::Measure_Json(telemetryJson) );
         // tb->Send_Json("v1/gateway/telemetry",telemetryJson, Helper::Measure_Json(telemetryJson) );

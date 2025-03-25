@@ -45,13 +45,13 @@ void dht20_task (void * pvParameter){
             Serial.print("Unknown error,\t");
             break;
         }
-
-        //  DISPLAY DATA, sensor has only one decimal.
-        Serial.print(dht.getTemperature(), 1);
-        Serial.print(",\t");
-        Serial.println(dht.getHumidity(), 1);
         telemetry.temperature = dht.getTemperature();
         telemetry.humidity = dht.getHumidity();
+
+        //  DISPLAY DATA, sensor has only one decimal.
+        // Serial.print(dht.getTemperature(), 1);
+        // Serial.print(",\t");
+        // Serial.println(dht.getHumidity(), 1);
 
         delay(2000);
 

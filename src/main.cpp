@@ -14,7 +14,8 @@
 #include "FastLED.h"
 CRGB leds[4];
 void updateRGB(){
-  FastLED.showColor(shared.light_state?CRGB::White : CRGB::Black);
+  FastLED.showColor(shared.rgb_bright >0 ?CRGB::White : CRGB::Black);
+  FastLED.setBrightness(shared.rgb_bright);
 }
 #endif
 #ifdef USE_LCD1602
@@ -60,8 +61,11 @@ void mois_task(void * pvParameter){
 void setup() {
   Serial.begin(SERIAL_BAUD);
   Serial1.begin(SERIAL_BAUD, SERIAL_8N1, 6, 7);
+#ifdef LED_PIN
+  pinMode(LED_PIN, OUTPUT);
+#endif
 #ifdef USE_I2C
-  Wire.begin(11,12);
+  Wire.begin(I2C_SDA,I2C_SCL);
 #endif
 #ifdef PUMP1_PIN
   pinMode(PUMP1_PIN, OUTPUT);
